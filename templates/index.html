@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+{% if winners %}
+<section class="results">
+    <h2 class="section-title">幸運得主</h2>
+    <ul class="winner-list">
+        {% for entry in winners %}
+        <li>
+            <span class="winner-handle">{{ entry.username }}</span>
+            <span class="winner-comment">{{ entry.comment }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% if warnings %}
+    <div class="note">
+        <strong>提醒：</strong>
+        <span>{{ warnings|join('、') }} 未偵測到留言，請確認截圖是否完整。</span>
+    </div>
+    {% endif %}
+    <form method="get" class="restart">
+        <button type="submit" class="ghost-button">重新開始</button>
+    </form>
+</section>
+<section class="hero hero--after">
+    <h1>rene的抽獎器</h1>
+    <p>再上傳新的截圖，一起迎接下一位幸運精靈粉絲。</p>
+</section>
+{% else %}
+<section class="hero">
+    <h1>rene的抽獎器</h1>
+    <p>把廣播頻道的蓋樓截圖拖曳進來，輕鬆抽出幸運粉絲。</p>
+</section>
+<section class="form-card">
+    <form id="draw-form" method="post" enctype="multipart/form-data">
+        <div class="field">
+            <label for="file-input">上傳蓋樓截圖</label>
+            <div id="dropzone" class="dropzone" role="region" aria-label="上傳截圖">
+                <input id="file-input" name="images" type="file" accept="image/*" multiple>
+                <div class="dropzone-content">
+                    <span class="icon">🧚‍♀️</span>
+                    <p>拖曳檔案到這裡，或點擊選擇圖片</p>
+                    <p class="hint">支援 JPG / PNG / WEBP，多張截圖會自動合併</p>
+                </div>
+            </div>
+            <ul id="file-list" class="file-list" aria-live="polite"></ul>
+        </div>
+        <div class="field">
+            <label for="sample-count">抽出名額</label>
+            <div class="input-wrap">
+                <input id="sample-count" name="sample_count" type="number" min="1" value="1" required>
+                <span class="unit">位粉絲</span>
+            </div>
+        </div>
+        <button type="submit" class="primary-button">Go</button>
+    </form>
+</section>
+{% endif %}
+{% endblock %}
