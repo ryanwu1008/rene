@@ -8,3 +8,5 @@ services:
     envVars:
       - key: FLASK_SECRET
         value: change-me-secret
+      - key: PYTHON_VERSION
+        value: 3.10.14
